@@ -167,17 +167,22 @@ def get_longest_peptide(rna_sequence, genetic_code):
         A string of the longest sequence of amino acids encoded by
         `rna_sequence`.
     """
-    rna_seq = rna_sequence.upper()
+    rna_seq = rna_sequence.upper() #make all entries, no matter case, uppercase. 
+    
+    #Add in previous functions needed for this section
     trans = get_all_translations(rna_seq, genetic_code)
     rev_comp = reverse_and_complement(rna_seq)
     rev_comp_all = get_all_translations(rev_comp, genetic_code)
+
+    #Add together amino acids from the translated rna_sequence, and its reverse complements.
     combined = trans + rev_comp_all
+
 
     while True:
         if combined == []:
-            longest_peptide = ""
+            longest_peptide = "" #Return empty string.
         else:
-            longest_peptide = max(combined, key = len)
+            longest_peptide = max(combined, key = len) # max() returns the highest value, or in our case, longest peptide!
         return longest_peptide
 
 
