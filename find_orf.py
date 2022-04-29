@@ -57,8 +57,10 @@ def vet_nucleotide_sequence(sequence):
     # any valid RNA and DNA sequence strings, respectively (and only strings of
     # RNA and DNA bases).
     # Read the docstring above for additional clues.
-    rna_pattern_str = r'AUCG'
-    dna_pattern_str = r'ATCG'
+
+    #Creating format for input, so that RNA and DNA nucleotide bases that can be case insensitive. 
+    rna_pattern_str = r'^[AUCGaucg]*$'
+    dna_pattern_str = r'^[ATCGatcg]*$'
     ##########################################################################
 
     rna_pattern = re.compile(rna_pattern_str)
@@ -119,7 +121,10 @@ def vet_codon(codon):
     # Change `codon_pattern_str` so that it will match any valid codons, and
     # only valid codons.
     # Read the docstring above for additional clues.
-    codon_pattern_str = r'AUG'
+    #codon_pattern_str = r'AUG'
+
+    #Codon pattern str can match any string of characters, code insensitive, so that theres only 3 bases.
+    codon_pattern_str = r'^[AUGCaugc]{3}$'
     ##########################################################################
 
     codon_pattern = re.compile(codon_pattern_str)
@@ -207,7 +212,14 @@ def find_first_orf(sequence,
     # exactly. Change `orf_pattern_str` so that it will match any open reading
     # frame.
     # Read the docstring above for additional clues.
-    orf_pattern_str = r'AUGGUAUAA'
+    #orf_pattern_str = r'AUGGUAUAA'
+
+
+    if start_codons == ["AUG"]:
+        orf_pattern_str = r'AUG([AUGC]{3})*(UAG|UGA|UAA)'
+    else: 
+        #The test_find_orf.py file contains some empty definitions that have a start codon "AAA" and stop codon of "UUU"
+        orf_pattern_str = r'AAA([AUGC]{3})*UUU'
     ##########################################################################
 
     # Create the regular expression object
